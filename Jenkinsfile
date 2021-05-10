@@ -57,6 +57,13 @@ pipeline {
                 sh "helm version"
             }
         }
+        stage('SafeOps') {
+            steps{
+                sh 'python3 -m pip install safeops-cli --user -U'
+                sh 'safeops start-scans -a ndrar7Sa.rT0Sv2UKHhJ36sW6117p2t1vStHoZdpi'
+                sh 'safeops get-results -a ndrar7Sa.rT0Sv2UKHhJ36sW6117p2t1vStHoZdpi'
+            }
+        }
         stage('Build Docker Images') {
             when {
                 anyOf {
@@ -85,13 +92,7 @@ pipeline {
                 }
             }
         }
-                stage('SafeOps') {
-            steps{
-                sh 'python3 -m pip install safeops-cli --user -U'
-                sh 'safeops start-scans -a ndrar7Sa.rT0Sv2UKHhJ36sW6117p2t1vStHoZdpi'
-                sh 'safeops get-results -a ndrar7Sa.rT0Sv2UKHhJ36sW6117p2t1vStHoZdpi'
-            }
-        }
+                
         stage('Deploy') {
             parallel {
                 stage('Deploying demo-app') {
