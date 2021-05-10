@@ -35,14 +35,14 @@ pipeline {
     parameters {
         string(name: 'GIT_BRANCH', defaultValue: 'main', description: 'Git branch to build')
     }
-    //all is built and run from the master
-    agent { node { label 'master' } }
+    //all is built and run from the main
+    agent { node { label 'main' } }
     // Pipeline stages
     stages {
         stage('Git clone and setup') {
             when {
                 anyOf {
-                    environment name: 'GIT_BRANCH', value: 'master'
+                    environment name: 'GIT_BRANCH', value: 'main'
                 }
             }
             steps {
@@ -67,7 +67,7 @@ pipeline {
         stage('Build Docker Images') {
             when {
                 anyOf {
-                    environment name: 'GIT_BRANCH', value: 'master'
+                    environment name: 'GIT_BRANCH', value: 'main'
                 }
             }
             parallel {
@@ -81,7 +81,7 @@ pipeline {
         stage('Publish Docker Images') {
             when {
                 anyOf {
-                    environment name: 'GIT_BRANCH', value: 'master'
+                    environment name: 'GIT_BRANCH', value: 'main'
                 }
             }
             parallel {
