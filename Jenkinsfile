@@ -28,12 +28,12 @@ pipeline {
         buildDiscarder(logRotator(daysToKeepStr: '15', artifactDaysToKeepStr: '15'))
     }
     environment {
-        IMAGE_NAME = 'demo-app'
+        IMAGE_NAME = 'viveks-app'
         DOCKER_REG = "350473869200.dkr.ecr.us-east-1.amazonaws.com"
-        PATH = "/Users/oiga/Library/Python/3.8/bin:$PATH"
+        PATH = "Python/3.8/bin:$PATH"
     }    
     parameters {
-        string(name: 'GIT_BRANCH', defaultValue: 'test', description: 'Git branch to build')
+        string(name: 'GIT_BRANCH', defaultValue: 'main', description: 'Git branch to build')
     }
     //all is built and run from the master
     agent { node { label 'master' } }
